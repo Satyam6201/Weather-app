@@ -3,7 +3,9 @@ const iconElement = document.querySelector(".weather-icon img");
 const tempElement = document.querySelector(".temperature-value p");
 const descElement = document.querySelector(".temperature-description p");
 const locationElement = document.querySelector(".location p");
+const windSpeedElement = document.querySelector(".wind-speed p");
 const notificationElement = document.querySelector(".notification");
+const toggleModeButton = document.getElementById("toggle-mode");
 
 // App data
 const weather = {
@@ -51,6 +53,7 @@ function getWeather(latitude, longitude) {
             weather.iconId = data.weather[0].icon;
             weather.city = data.name;
             weather.country = data.sys.country;
+            weather.windSpeed = data.wind.speed;
             displayWeather();
         })
         .catch(() => displayError("Could not fetch weather data."));
@@ -62,6 +65,7 @@ function displayWeather() {
     tempElement.innerHTML = `${weather.temperature.value}°<span>C</span>`;
     descElement.innerHTML = weather.description;
     locationElement.innerHTML = `${weather.city}, ${weather.country}`;
+    windSpeedElement.innerHTML = `Wind: ${weather.windSpeed} km/h`;
 }
 
 // CONVERT CELSIUS TO FAHRENHEIT
@@ -81,4 +85,9 @@ tempElement.addEventListener("click", function () {
         tempElement.innerHTML = `${weather.temperature.value}°<span>C</span>`;
         weather.temperature.unit = "celsius";
     }
+});
+
+// TOGGLE DARK/LIGHT MODE
+toggleModeButton.addEventListener("click", () => {
+    document.body.classList.toggle("dark-mode");
 });
