@@ -48,16 +48,18 @@
       <h2>Weather App</h2>
     </div>
 
-    <div class="search-box">
-      <input type="text" id="search-input" placeholder="Enter city name..." />
-      <button id="search-btn">Search</button>
-    </div>
+    <!-- ✅ Entire app inside unified weather-card -->
+    <div class="weather-card">
+      <!-- 🔍 Search -->
+      <div class="search-box">
+        <input type="text" id="search-input" placeholder="Enter city name..." />
+        <button id="search-btn">Search</button>
+      </div>
 
-    <div class="notification"></div>
+      <!-- 🚨 Notification -->
+      <div class="notification"></div>
 
-    <!-- 🔄 Combined Weather & Forecast Box -->
-    <div class="weather-box">
-      <!-- Current Weather Section -->
+      <!-- 🌤️ Current Weather -->
       <div class="weather-container">
         <div class="weather-icon">
           <img src="icons/unknown.png" alt="Weather Icon" />
@@ -76,13 +78,15 @@
         </div>
       </div>
 
-      <!-- Forecast Section -->
+      <!-- 📅 7-Day Forecast -->
       <div class="forecast-container" id="forecast-container">
-        <!-- Forecast days injected here -->
+        <!-- JS will inject forecast cards -->
       </div>
     </div>
 
+    <!-- 🌙 Dark Mode Toggle -->
     <button id="toggle-mode">🌙 Toggle Dark Mode</button>
   </div>
+
   <script src="app.js"></script>
 </body>
