@@ -34,3 +34,51 @@
     <script src="app.js"></script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Weather App</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <div class="container">
+    <div class="app-title">
+      <h2>Weather App</h2>
+    </div>
+
+    <div class="search-box">
+      <input type="text" id="search-input" placeholder="Enter city name..." />
+      <button id="search-btn">Search</button>
+    </div>
+
+    <div class="notification"></div>
+
+    <div class="weather-container">
+      <div class="weather-icon">
+        <img src="icons/unknown.png" alt="Weather Icon"/>
+      </div>
+      <div class="temperature-value">
+        <p>- °<span>C</span></p>
+      </div>
+      <div class="temperature-description">
+        <p>-</p>
+      </div>
+      <div class="location">
+        <p>-</p>
+      </div>
+      <div class="wind-speed">
+        <p>Wind: - km/h</p>
+      </div>
+    </div>
+
+    <div class="forecast-container" id="forecast-container">
+      <!-- 7-day forecast will be injected here -->
+    </div>
+
+    <button id="toggle-mode">Toggle Dark Mode</button>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
