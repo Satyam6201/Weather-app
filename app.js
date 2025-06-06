@@ -10,6 +10,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const searchInput = document.getElementById("search-input");
   const forecastContainer = document.getElementById("forecast-container");
 
+  // Extra details elements
+  const feelsLikeElement = document.getElementById("feels-like");
+  const humidityElement = document.getElementById("humidity");
+  const pressureElement = document.getElementById("pressure");
+  const sunriseElement = document.getElementById("sunrise");
+  const sunsetElement = document.getElementById("sunset");
+  const windDirectionElement = document.getElementById("wind-direction");
+  const cityPhoto = document.getElementById("city-photo");
+
   const weather = {
     temperature: { unit: "celsius" },
   };
@@ -69,16 +78,35 @@ document.addEventListener("DOMContentLoaded", () => {
     weather.city = data.name;
     weather.country = data.sys.country;
     weather.windSpeed = data.wind.speed;
+    weather.feels_like = data.main.feels_like;
+    weather.humidity = data.main.humidity;
+    weather.pressure = data.main.pressure;
+    weather.sunrise = data.sys.sunrise;
+    weather.sunset = data.sys.sunset;
+    weather.wind_deg = data.wind.deg;
 
     displayWeather();
+    fetchCityImage(data.name);
   }
 
   function displayWeather() {
     iconElement.src = `https://openweathermap.org/img/wn/${weather.iconId}@2x.png`;
     tempElement.innerHTML = `${weather.temperature.value}°<span>C</span>`;
     descElement.innerHTML = weather.description;
-    locationElement.innerHTML = `${weather.city}, ${weather.country}`;
+    locationElement.innerHTML = `${weather.city}, ${weather.country} <img src="https://flagcdn.com/24x18/${weather.country.toLowerCase()}.png" alt="flag" />`;
     windSpeedElement.innerHTML = `Wind: ${weather.windSpeed} km/h`;
+
+    feelsLikeElement.innerHTML = `Feels Like: ${Math.round(weather.feels_like)}°C`;
+    humidityElement.innerHTML = `Humidity: ${weather.humidity}%`;
+    pressureElement.innerHTML = `Pressure: ${weather.pressure} hPa`;
+    sunriseElement.innerHTML = `Sunrise: ${new Date(weather.sunrise * 1000).toLocaleTimeString()}`;
+    sunsetElement.innerHTML = `Sunset: ${new Date(weather.sunset * 1000).toLocaleTimeString()}`;
+    windDirectionElement.innerHTML = `Direction: ${getWindDirection(weather.wind_deg)}`;
+  }
+
+  function getWindDirection(deg) {
+    const directions = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"];
+    return directions[Math.round(deg / 45) % 8];
   }
 
   function getForecast(lat, lon) {
@@ -137,4 +165,11 @@ document.addEventListener("DOMContentLoaded", () => {
       notificationElement.style.display = "none";
     }
   });
+
+  // Fetch city image using Unsplash Source API
+  function fetchCityImage(city) {
+    const imgUrl = `https://source.unsplash.com/600x400/?${city},city`;
+    cityPhoto.src = imgUrl;
+    cityPhoto.alt = `Image of ${city}`;
+  }
 });
