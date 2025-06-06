@@ -12,7 +12,6 @@
       <h2>Weather App</h2>
     </div>
 
-    <!-- ✅ Unified Card Box -->
     <div class="weather-card">
       <div class="search-box">
         <input type="text" id="search-input" placeholder="Enter city name..." />
@@ -37,6 +36,21 @@
         <div class="wind-speed">
           <p>Wind: - km/h</p>
         </div>
+
+        <!-- Extra weather details -->
+        <div class="extra-details">
+          <p id="feels-like">Feels Like: - °C</p>
+          <p id="humidity">Humidity: - %</p>
+          <p id="pressure">Pressure: - hPa</p>
+          <p id="sunrise">Sunrise: -</p>
+          <p id="sunset">Sunset: -</p>
+          <p id="wind-direction">Direction: -</p>
+        </div>
+
+        <!-- City image -->
+        <div class="city-image">
+          <img id="city-photo" src="" alt="City Image" />
+        </div>
       </div>
 
       <div class="forecast-container" id="forecast-container">
@@ -44,7 +58,7 @@
       </div>
     </div>
 
-    <!-- Toggle -->
+    <!-- Toggle Dark Mode -->
     <button id="toggle-mode">🌙 Toggle Dark Mode</button>
   </div>
 
