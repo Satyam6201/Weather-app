@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const OPENWEATHER_KEY = "82005d27a116c2880c8f0fcb866998a0";
-  const UNSPLASH_ACCESS_KEY = "YOUR_UNSPLASH_ACCESS_KEY"; // <--- Replace with your Unsplash API key
+  const UNSPLASH_ACCESS_KEY = "YOUR_UNSPLASH_ACCESS_KEY"; // Replace with your real Unsplash API key
 
   if ("geolocation" in navigator) {
     navigator.geolocation.getCurrentPosition(setPosition, showError);
@@ -133,7 +133,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!fill) return;
     fill.style.width = `${(value / max) * 100}%`;
 
-    // Update text content too
     if (id === "humidity") {
       box.childNodes[0].textContent = `Humidity: ${value}%`;
     } else if (id === "pressure") {
@@ -212,10 +211,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Unsplash API for city images
+  // Unsplash API for city images with debugging and fallback
   function fetchCityImage(city) {
     if (!UNSPLASH_ACCESS_KEY || UNSPLASH_ACCESS_KEY === "YOUR_UNSPLASH_ACCESS_KEY") {
-      // fallback to source.unsplash if no access key set
+      console.warn("Unsplash API key missing or placeholder, using fallback image.");
       cityPhoto.src = `https://source.unsplash.com/600x400/?${city},city`;
       cityPhoto.alt = `Image of ${city}`;
       return;
@@ -224,8 +223,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const url = `https://api.unsplash.com/search/photos?query=${city}&client_id=${UNSPLASH_ACCESS_KEY}&orientation=landscape&per_page=1`;
 
     fetch(url)
-      .then((res) => res.json())
+      .then((res) => {
+        console.log("Unsplash response status:", res.status);
+        return res.json();
+      })
       .then((data) => {
+        console.log("Unsplash data:", data);
         if (data.results && data.results.length > 0) {
           cityPhoto.src = data.results[0].urls.regular;
           cityPhoto.alt = data.results[0].alt_description || `Image of ${city}`;
@@ -234,7 +237,8 @@ document.addEventListener("DOMContentLoaded", () => {
           cityPhoto.alt = `Image of ${city}`;
         }
       })
-      .catch(() => {
+      .catch((err) => {
+        console.error("Unsplash fetch error:", err);
         cityPhoto.src = `https://source.unsplash.com/600x400/?${city},city`;
         cityPhoto.alt = `Image of ${city}`;
       });
