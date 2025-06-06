@@ -2,64 +2,71 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Weather App</title>
-  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="container">
-    <div class="app-title">
-      <h2>Weather App</h2>
+    <h1>Weather App</h1>
+
+    <div class="notification" style="display:none;"></div>
+
+    <div class="search-bar">
+      <input type="text" id="search-input" placeholder="Enter city name..." />
+      <button id="search-btn">Search</button>
+      <button id="toggle-mode">Toggle Dark Mode</button>
     </div>
 
-    <div class="weather-card">
-      <div class="search-box">
-        <input type="text" id="search-input" placeholder="Enter city name..." />
-        <button id="search-btn">Search</button>
+    <div class="weather-info">
+      <div class="weather-icon">
+        <img src="" alt="Weather Icon" />
+      </div>
+      <div class="temperature-value">
+        <p>--°<span>C</span></p>
+      </div>
+      <div class="temperature-description">
+        <p>Loading...</p>
+      </div>
+      <div class="location">
+        <p>--</p>
+      </div>
+      <div class="wind-speed">
+        <p>Wind: -- km/h</p>
       </div>
 
-      <div class="notification"></div>
+      <div class="extra-details">
+        <div class="extra-detail-box" id="feels-like">Feels Like: --°C</div>
 
-      <div class="weather-container">
-        <div class="weather-icon">
-          <img src="icons/unknown.png" alt="Weather Icon" />
-        </div>
-        <div class="temperature-value">
-          <p>- °<span>C</span></p>
-        </div>
-        <div class="temperature-description">
-          <p>-</p>
-        </div>
-        <div class="location">
-          <p>-</p>
-        </div>
-        <div class="wind-speed">
-          <p>Wind: - km/h</p>
+        <div class="extra-detail-box" id="humidity">
+          Humidity: --%
+          <div class="progress-bar"><div class="progress-bar-fill"></div></div>
         </div>
 
-        <!-- Extra weather details with separate boxes -->
-        <div class="extra-details">
-          <div class="extra-detail-box" id="feels-like">Feels Like: - °C</div>
-          <div class="extra-detail-box" id="humidity">Humidity: - %</div>
-          <div class="extra-detail-box" id="pressure">Pressure: - hPa</div>
-          <div class="extra-detail-box" id="sunrise">Sunrise: -</div>
-          <div class="extra-detail-box" id="sunset">Sunset: -</div>
-          <div class="extra-detail-box" id="wind-direction">Direction: -</div>
+        <div class="extra-detail-box" id="pressure">
+          Pressure: -- hPa
+          <div class="progress-bar"><div class="progress-bar-fill"></div></div>
         </div>
 
-        <!-- City image -->
-        <div class="city-image">
-          <img id="city-photo" src="" alt="City Image" />
+        <div class="extra-detail-box" id="sunrise">Sunrise: --:--:--</div>
+        <div class="extra-detail-box" id="sunset">Sunset: --:--:--</div>
+
+        <div class="extra-detail-box" id="wind-direction">
+          Direction: --
+          <br />
+          <svg id="wind-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transform-origin:center;">
+            <line x1="12" y1="19" x2="12" y2="5"></line>
+            <polyline points="5 12 12 5 19 12"></polyline>
+          </svg>
         </div>
       </div>
 
-      <div class="forecast-container" id="forecast-container">
-        <!-- JS injects forecast -->
-      </div>
+      <div id="forecast-container" class="forecast-container"></div>
+
+      <img id="city-photo" alt="City Image" class="city-photo" />
+
+      <div id="loader" class="loader" style="display:none;"></div>
     </div>
-
-    <!-- Toggle Dark Mode -->
-    <button id="toggle-mode">🌙 Toggle Dark Mode</button>
   </div>
 
   <script src="app.js"></script>
