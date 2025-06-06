@@ -121,6 +121,27 @@ body {
   margin: 5px 0;
 }
 
+/* === Extra Details === */
+.extra-details p {
+  font-size: 1em;
+  color: #eee;
+  margin: 3px 0;
+}
+
+/* === City Image === */
+.city-image {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.city-image img {
+  width: 100%;
+  border-radius: 10px;
+  object-fit: cover;
+  height: 200px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
 /* === Forecast === */
 .forecast-container {
   display: grid;
@@ -218,6 +239,7 @@ body {
 
 .dark-mode .temperature-description p,
 .dark-mode .location p,
-.dark-mode .wind-speed p {
+.dark-mode .wind-speed p,
+.dark-mode .extra-details p {
   color: #e0e0e0;
 }
