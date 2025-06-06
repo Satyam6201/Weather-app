@@ -18,12 +18,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const sunsetElement = document.getElementById("sunset");
   const windDirectionElement = document.getElementById("wind-direction");
   const cityPhoto = document.getElementById("city-photo");
+  const loader = document.getElementById("loader");
+  const windArrow = document.getElementById("wind-arrow");
 
   const weather = {
     temperature: { unit: "celsius" },
   };
 
-  const key = "82005d27a116c2880c8f0fcb866998a0";
+  const OPENWEATHER_KEY = "82005d27a116c2880c8f0fcb866998a0";
+  const UNSPLASH_ACCESS_KEY = "YOUR_UNSPLASH_ACCESS_KEY"; // <--- Replace with your Unsplash API key
 
   if ("geolocation" in navigator) {
     navigator.geolocation.getCurrentPosition(setPosition, showError);
@@ -42,33 +45,48 @@ document.addEventListener("DOMContentLoaded", () => {
   function displayError(message) {
     notificationElement.style.display = "block";
     notificationElement.innerHTML = `<p>${message}</p>`;
+    hideLoader();
+  }
+
+  function showLoader() {
+    loader.style.display = "block";
+  }
+
+  function hideLoader() {
+    loader.style.display = "none";
   }
 
   function getWeatherByCoords(lat, lon) {
-    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${key}&units=metric`;
+    showLoader();
+    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${OPENWEATHER_KEY}&units=metric`;
 
     fetch(url)
-      .then(res => res.json())
-      .then(data => {
+      .then((res) => res.json())
+      .then((data) => {
         updateWeatherData(data);
         getForecast(lat, lon);
+        notificationElement.style.display = "none";
       })
-      .catch(() => displayError("Unable to fetch weather."));
+      .catch(() => displayError("Unable to fetch weather."))
+      .finally(() => hideLoader());
   }
 
   function getWeatherByCity(city) {
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${key}&units=metric`;
+    showLoader();
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${OPENWEATHER_KEY}&units=metric`;
 
     fetch(url)
-      .then(res => {
+      .then((res) => {
         if (!res.ok) throw new Error("City not found");
         return res.json();
       })
-      .then(data => {
+      .then((data) => {
         updateWeatherData(data);
         getForecast(data.coord.lat, data.coord.lon);
+        notificationElement.style.display = "none";
       })
-      .catch(() => displayError("City not found."));
+      .catch(() => displayError("City not found."))
+      .finally(() => hideLoader());
   }
 
   function updateWeatherData(data) {
@@ -97,11 +115,30 @@ document.addEventListener("DOMContentLoaded", () => {
     windSpeedElement.innerHTML = `Wind: ${weather.windSpeed} km/h`;
 
     feelsLikeElement.innerHTML = `Feels Like: ${Math.round(weather.feels_like)}°C`;
-    humidityElement.innerHTML = `Humidity: ${weather.humidity}%`;
-    pressureElement.innerHTML = `Pressure: ${weather.pressure} hPa`;
+
+    updateProgressBar("humidity", weather.humidity);
+    updateProgressBar("pressure", weather.pressure, 1100);
+
     sunriseElement.innerHTML = `Sunrise: ${new Date(weather.sunrise * 1000).toLocaleTimeString()}`;
     sunsetElement.innerHTML = `Sunset: ${new Date(weather.sunset * 1000).toLocaleTimeString()}`;
-    windDirectionElement.innerHTML = `Direction: ${getWindDirection(weather.wind_deg)}`;
+
+    windDirectionElement.firstChild.textContent = `Direction: ${getWindDirection(weather.wind_deg)}`;
+    updateWindArrow(weather.wind_deg);
+  }
+
+  function updateProgressBar(id, value, max = 100) {
+    const box = document.getElementById(id);
+    if (!box) return;
+    const fill = box.querySelector(".progress-bar-fill");
+    if (!fill) return;
+    fill.style.width = `${(value / max) * 100}%`;
+
+    // Update text content too
+    if (id === "humidity") {
+      box.childNodes[0].textContent = `Humidity: ${value}%`;
+    } else if (id === "pressure") {
+      box.childNodes[0].textContent = `Pressure: ${value} hPa`;
+    }
   }
 
   function getWindDirection(deg) {
@@ -109,15 +146,20 @@ document.addEventListener("DOMContentLoaded", () => {
     return directions[Math.round(deg / 45) % 8];
   }
 
+  function updateWindArrow(deg) {
+    if (!windArrow) return;
+    windArrow.style.transform = `rotate(${deg}deg)`;
+  }
+
   function getForecast(lat, lon) {
-    const api = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${key}&units=metric`;
+    const api = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${OPENWEATHER_KEY}&units=metric`;
 
     fetch(api)
-      .then(res => res.json())
-      .then(data => {
+      .then((res) => res.json())
+      .then((data) => {
         const daily = {};
 
-        data.list.forEach(entry => {
+        data.list.forEach((entry) => {
           if (entry.dt_txt.includes("12:00:00")) {
             const date = new Date(entry.dt_txt).toDateString();
             daily[date] = entry;
@@ -125,15 +167,19 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         forecastContainer.innerHTML = "";
-        Object.values(daily).slice(0, 7).forEach(day => {
-          forecastContainer.innerHTML += `
+        Object.values(daily)
+          .slice(0, 7)
+          .forEach((day) => {
+            forecastContainer.innerHTML += `
             <div class="forecast-day">
-              <p><strong>${new Date(day.dt_txt).toLocaleDateString("en-US", { weekday: "short" })}</strong></p>
+              <p><strong>${new Date(day.dt_txt).toLocaleDateString("en-US", {
+                weekday: "short",
+              })}</strong></p>
               <img src="https://openweathermap.org/img/wn/${day.weather[0].icon}.png" width="50" />
               <p>${Math.round(day.main.temp)}°C</p>
               <p>${day.weather[0].main}</p>
             </div>`;
-        });
+          });
       });
   }
 
@@ -166,10 +212,38 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Fetch city image using Unsplash Source API
+  // Unsplash API for city images
   function fetchCityImage(city) {
-    const imgUrl = `https://source.unsplash.com/600x400/?${city},city`;
-    cityPhoto.src = imgUrl;
-    cityPhoto.alt = `Image of ${city}`;
+    if (!UNSPLASH_ACCESS_KEY || UNSPLASH_ACCESS_KEY === "YOUR_UNSPLASH_ACCESS_KEY") {
+      // fallback to source.unsplash if no access key set
+      cityPhoto.src = `https://source.unsplash.com/600x400/?${city},city`;
+      cityPhoto.alt = `Image of ${city}`;
+      return;
+    }
+
+    const url = `https://api.unsplash.com/search/photos?query=${city}&client_id=${UNSPLASH_ACCESS_KEY}&orientation=landscape&per_page=1`;
+
+    fetch(url)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.results && data.results.length > 0) {
+          cityPhoto.src = data.results[0].urls.regular;
+          cityPhoto.alt = data.results[0].alt_description || `Image of ${city}`;
+        } else {
+          cityPhoto.src = `https://source.unsplash.com/600x400/?${city},city`;
+          cityPhoto.alt = `Image of ${city}`;
+        }
+      })
+      .catch(() => {
+        cityPhoto.src = `https://source.unsplash.com/600x400/?${city},city`;
+        cityPhoto.alt = `Image of ${city}`;
+      });
   }
+
+  // Auto refresh every 10 minutes (600000 ms)
+  setInterval(() => {
+    if (weather.city) {
+      getWeatherByCity(weather.city);
+    }
+  }, 600000);
 });
