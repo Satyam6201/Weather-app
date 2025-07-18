@@ -18,9 +18,6 @@
       <button id="toggle-mode">Toggle Dark Mode</button>
     </div>
 
-    <!-- 🌆 Saved Cities -->
-    <div id="city-list" class="saved-cities"></div>
-
     <div class="weather-info">
       <div class="weather-icon">
         <img src="" alt="Weather Icon" />
@@ -40,16 +37,20 @@
 
       <div class="extra-details">
         <div class="extra-detail-box" id="feels-like">Feels Like: --°C</div>
+
         <div class="extra-detail-box" id="humidity">
           Humidity: --%
           <div class="progress-bar"><div class="progress-bar-fill"></div></div>
         </div>
+
         <div class="extra-detail-box" id="pressure">
           Pressure: -- hPa
           <div class="progress-bar"><div class="progress-bar-fill"></div></div>
         </div>
+
         <div class="extra-detail-box" id="sunrise">Sunrise: --:--:--</div>
         <div class="extra-detail-box" id="sunset">Sunset: --:--:--</div>
+
         <div class="extra-detail-box" id="wind-direction">
           Direction: --
           <br />
@@ -58,26 +59,13 @@
             <polyline points="5 12 12 5 19 12"></polyline>
           </svg>
         </div>
-
-        <!-- 🌫️ Air Quality Index -->
-        <div class="extra-detail-box" id="aqi-box">Air Quality Index: --</div>
       </div>
 
-      <!-- 📆 7-Day Forecast -->
       <div id="forecast-container" class="forecast-container"></div>
-
-      <!-- 🕐 Hourly Forecast (Next 12 Hours) -->
-      <div id="hourly-forecast" class="hourly-forecast"></div>
-
-      <!-- 📸 City Image -->
-      <img id="city-photo" alt="City Image" class="city-photo" />
-
-      <!-- 🔄 Loader -->
       <div id="loader" class="loader" style="display:none;"></div>
     </div>
   </div>
 
   <script src="app.js"></script>
 </body>
-
 </html>
