@@ -9,18 +9,25 @@
 <body>
   <div class="container">
     <h1>Weather App</h1>
+    <div class="live-clock" id="live-clock">--:--:--</div>
 
+    <!-- 🔔 Notifications -->
     <div class="notification" style="display:none;"></div>
 
+    <!-- 🔍 Search Section -->
     <div class="search-bar">
       <input type="text" id="search-input" placeholder="Enter city name..." />
       <button id="search-btn">Search</button>
+      <button id="voice-btn">🎤 Speak</button>
       <button id="toggle-mode">Toggle Dark Mode</button>
+      <button id="unit-toggle">°C / °F</button>
+      <button id="sound-toggle">🔊 Sound</button>
     </div>
 
     <!-- 🌆 Saved Cities -->
     <div id="city-list" class="saved-cities"></div>
 
+    <!-- 🌦️ Weather Info -->
     <div class="weather-info">
       <div class="weather-icon">
         <img src="" alt="Weather Icon" />
@@ -38,6 +45,13 @@
         <p>Wind: -- km/h</p>
       </div>
 
+      <!-- 🔎 Summary -->
+      <div class="extra-detail-box" style="margin-top: 10px;">
+        <strong>Weather Summary:</strong>
+        <p id="summary-text">--</p>
+      </div>
+
+      <!-- 📊 Detailed Metrics -->
       <div class="extra-details">
         <div class="extra-detail-box" id="feels-like">Feels Like: --°C</div>
         <div class="extra-detail-box" id="humidity">
@@ -66,18 +80,21 @@
       <!-- 📆 7-Day Forecast -->
       <div id="forecast-container" class="forecast-container"></div>
 
-      <!-- 🕐 Hourly Forecast (Next 12 Hours) -->
+      <!-- 🕐 Hourly Forecast -->
       <div id="hourly-forecast" class="hourly-forecast"></div>
-
-      <!-- 📸 City Image -->
-      <img id="city-photo" alt="City Image" class="city-photo" />
 
       <!-- 🔄 Loader -->
       <div id="loader" class="loader" style="display:none;"></div>
     </div>
+
+    <!-- 📌 Footer -->
+    <footer style="text-align:center; margin-top: 30px; color:#ccc; font-size: 0.9rem;">
+      Made with ❤️ by Satyam | Live Weather | Updated every 10 minutes
+    </footer>
   </div>
 
   <script src="app.js"></script>
 </body>
+
 
 </html>
