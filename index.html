@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Enhanced Weather App</title>
+  <title>Weather App</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -17,10 +17,6 @@
       <button id="search-btn">Search</button>
       <button id="toggle-mode">Toggle Dark Mode</button>
     </div>
-
-    <div id="city-list" class="saved-cities"></div>
-
-    <div class="live-clock" id="live-clock">--:--:--</div>
 
     <div class="weather-info">
       <div class="weather-icon">
@@ -41,23 +37,34 @@
 
       <div class="extra-details">
         <div class="extra-detail-box" id="feels-like">Feels Like: --°C</div>
-        <div class="extra-detail-box" id="humidity">Humidity: --%<div class="progress-bar"><div class="progress-bar-fill"></div></div></div>
-        <div class="extra-detail-box" id="pressure">Pressure: -- hPa<div class="progress-bar"><div class="progress-bar-fill"></div></div></div>
+
+        <div class="extra-detail-box" id="humidity">
+          Humidity: --%
+          <div class="progress-bar"><div class="progress-bar-fill"></div></div>
+        </div>
+
+        <div class="extra-detail-box" id="pressure">
+          Pressure: -- hPa
+          <div class="progress-bar"><div class="progress-bar-fill"></div></div>
+        </div>
+
         <div class="extra-detail-box" id="sunrise">Sunrise: --:--:--</div>
         <div class="extra-detail-box" id="sunset">Sunset: --:--:--</div>
-        <div class="extra-detail-box" id="wind-direction">Direction: --<br />
+
+        <div class="extra-detail-box" id="wind-direction">
+          Direction: --
+          <br />
           <svg id="wind-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transform-origin:center;">
             <line x1="12" y1="19" x2="12" y2="5"></line>
             <polyline points="5 12 12 5 19 12"></polyline>
           </svg>
         </div>
-        <div class="extra-detail-box" id="aqi-box">Air Quality Index: --</div>
       </div>
 
       <div id="forecast-container" class="forecast-container"></div>
-      <div id="hourly-forecast" class="hourly-forecast"></div>
 
       <img id="city-photo" alt="City Image" class="city-photo" />
+
       <div id="loader" class="loader" style="display:none;"></div>
     </div>
   </div>
