@@ -54,15 +54,10 @@ A clean and responsive weather application built using **HTML**, **CSS**, and **
 ## 📂 File Structure
 
 Weather-app/
-
-│
-
+```
 ├── index.html # Main HTML file
-
 ├── style.css # All styles
-
 ├── app.js # JavaScript logic
-
 ├── icons/ # Folder for default icons
-
 └── README.md
+```
