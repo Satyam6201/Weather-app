@@ -2,70 +2,56 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Weather App</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="container">
-    <h1>Weather App</h1>
 
-    <div class="notification" style="display:none;"></div>
+<div class="app fade-in">
+  <header>
+    <h1>🌦 Weather</h1>
+    <button id="toggle-mode">🌙</button>
+  </header>
 
-    <div class="search-bar">
-      <input type="text" id="search-input" placeholder="Enter city name..." />
-      <button id="search-btn">Search</button>
-      <button id="toggle-mode">Toggle Dark Mode</button>
-    </div>
-
-    <div class="weather-info">
-      <div class="weather-icon">
-        <img src="" alt="Weather Icon" />
-      </div>
-      <div class="temperature-value">
-        <p>--°<span>C</span></p>
-      </div>
-      <div class="temperature-description">
-        <p>Loading...</p>
-      </div>
-      <div class="location">
-        <p>--</p>
-      </div>
-      <div class="wind-speed">
-        <p>Wind: -- km/h</p>
-      </div>
-
-      <div class="extra-details">
-        <div class="extra-detail-box" id="feels-like">Feels Like: --°C</div>
-
-        <div class="extra-detail-box" id="humidity">
-          Humidity: --%
-          <div class="progress-bar"><div class="progress-bar-fill"></div></div>
-        </div>
-
-        <div class="extra-detail-box" id="pressure">
-          Pressure: -- hPa
-          <div class="progress-bar"><div class="progress-bar-fill"></div></div>
-        </div>
-
-        <div class="extra-detail-box" id="sunrise">Sunrise: --:--:--</div>
-        <div class="extra-detail-box" id="sunset">Sunset: --:--:--</div>
-
-        <div class="extra-detail-box" id="wind-direction">
-          Direction: --
-          <br />
-          <svg id="wind-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transform-origin:center;">
-            <line x1="12" y1="19" x2="12" y2="5"></line>
-            <polyline points="5 12 12 5 19 12"></polyline>
-          </svg>
-        </div>
-      </div>
-
-      <div id="forecast-container" class="forecast-container"></div>
-      <div id="loader" class="loader" style="display:none;"></div>
-    </div>
+  <div class="search card">
+    <input id="search-input" placeholder="Search city..." />
+    <button id="search-btn">Search</button>
   </div>
 
-  <script src="app.js"></script>
+  <p class="notification"></p>
+  <div class="loader" id="loader"></div>
+
+  <section class="main card">
+    <span class="badge" id="geo-badge">📍 Current Location</span>
+    <img id="weather-icon" />
+    <h2 id="temp">--°C</h2>
+    <p id="desc">---</p>
+    <p id="location">---</p>
+    <p id="time">---</p>
+  </section>
+
+  <section class="stats">
+    <div class="card">Feels <span id="feels">--</span>°</div>
+    <div class="card">Humidity <span id="humidity">--</span>%</div>
+    <div class="card">Pressure <span id="pressure">--</span> hPa</div>
+    <div class="card">Wind <span id="wind">--</span> km/h</div>
+    <div class="card">Min <span id="min">--</span>°</div>
+    <div class="card">Max <span id="max">--</span>°</div>
+  </section>
+
+  <section class="wind-card card">
+    Wind Direction
+    <svg id="arrow" viewBox="0 0 24 24">
+      <line x1="12" y1="20" x2="12" y2="4"/>
+      <polyline points="5 11 12 4 19 11"/>
+    </svg>
+  </section>
+
+  <h3>5-Day Forecast</h3>
+  <div id="forecast" class="forecast"></div>
+</div>
+
+<script src="app.js"></script>
 </body>
 </html>
